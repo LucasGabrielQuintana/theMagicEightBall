@@ -33,3 +33,48 @@ fun main(args: Array<String>) {
         else -> mostrarError()
     }
 }
+
+fun mostrarError() {
+    println("OPCION NO VALIDA")
+}
+
+fun salir() {
+    println("Hasta Luego")
+}
+
+fun mostrarRespuestas() {
+    println("Selecciona una opción")
+    println("1. Revisar todas las respuestas")
+    println("2. Revisar solo las respuestas afirmativas")
+    println("3. Revisar solo las respuestas dudodas")
+    println("4. Revisar solo las respuestas negativas")
+
+    val opcionIngresada = readLine()
+    when(opcionIngresada){
+        "1" -> mostrarRespuestasPorTipo()
+        "2" -> mostrarRespuestasPorTipo(tipoDeRespuesta = RESPUESTA_AFIRMATIVA)
+        "3" -> mostrarRespuestasPorTipo(tipoDeRespuesta = RESPUESTA_DUDOSA)
+        "4" -> mostrarRespuestasPorTipo(tipoDeRespuesta = RESPUESTA_NEGATIVA)
+        else -> println("Respuesta no válida. Adios")
+    }
+}
+
+fun mostrarRespuestasPorTipo(tipoDeRespuesta : String = "TODOS") {
+    when(tipoDeRespuesta){
+        "TODOS"-> respuestas.keys.forEach{respuestas -> println(respuestas)}
+        RESPUESTA_AFIRMATIVA -> respuestas.filterValues { values -> values == RESPUESTA_AFIRMATIVA }
+            .also { respuestasPositivas -> println(respuestasPositivas.keys) }
+        RESPUESTA_DUDOSA -> respuestas.filterValues { values -> values == RESPUESTA_DUDOSA }
+            .also { respuestasDudosas -> println(respuestasDudosas.keys) }
+        RESPUESTA_NEGATIVA -> respuestas.filterValues { values -> values == RESPUESTA_NEGATIVA }
+            .also { respuestasNegativas -> println(respuestasNegativas.keys) }
+    }
+}
+
+fun realizarPregunta(){
+    println("¿Que pregunta deseas realizar?")
+    readLine()
+    println("Asi que esa es tu pregunta... la respuesta es : ")
+    val respuestaGenerada = respuestas.keys.random()
+    println(respuestaGenerada)
+}
